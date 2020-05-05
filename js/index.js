@@ -61,6 +61,7 @@
      window.location.href = ('pages/ResumeTemplate/Resume.html');
 }
 
+
  function openCity(evt, tabName) {
     //alert(tabName)
     if(tabName =='SignUp'){

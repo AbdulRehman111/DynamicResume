@@ -18,6 +18,9 @@ function appendValuesInResume() {
     let country = sessionStorage.getItem('country');
     let experience = sessionStorage.getItem('experience');
     let nearestOffice = sessionStorage.getItem('nearestOffice');
+    let state = sessionStorage.getItem('state');
+    let authCountries = sessionStorage.getItem('authCountries');
+    let adAge = sessionStorage.getItem('adAge');
 
     document.getElementById("profilePic").src = profilePic;
     document.getElementById("showFirtName").innerHTML = firstName;
@@ -33,27 +36,13 @@ function appendValuesInResume() {
 
     document.getElementById("state").innerHTML = state;
     document.getElementById("country").innerHTML = country;
-
-    document.getElementById("experience").innerHTML = experience;
-    document.getElementById("nearestOffice").innerHTML = nearestOffice;
+    //
+    //document.getElementById("experience").innerHTML = experience;
+    //document.getElementById("nearestOffice").innerHTML = nearestOffice;
+    //document.getElementById("authCountries").innerHTML = authCountries;
+    //document.getElementById("adAge").innerHTML = adAge;
 
 }
 
 appendValuesInResume();
 
-// ***** download Resume As PDF *******//
-
-var doc = new jsPDF();
-var specialElementHandlers = {
-    '#editor': function (element, renderer) {
-        return true;
-    }
-};
-$('#cmd').click(function () {
-//        alert('aa')
-    doc.fromHTML($('#content').html(), 15, 15, {
-        'width': 170,
-        'elementHandlers': specialElementHandlers
-    });
-    doc.save('myResume.pdf');
-});

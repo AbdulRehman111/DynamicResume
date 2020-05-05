@@ -152,7 +152,7 @@ a:hover {
 .entry {
 	width:720px;
 	display: block;
-	padding-top:55px;
+	padding-top:30px;
 	clear: both;
 	margin-left:4px;
 }
@@ -161,7 +161,7 @@ h1  {
 	width:300px;
 	font-size:42px;
 	color:#1b4491;
-	margin-bottom:3px;
+	/*margin-bottom:3px;*/
 	clear:both;
 }
 
@@ -388,7 +388,7 @@ img.portrait {
 	background-image:url(../images/frame.jpg);
 	background-repeat: no-repeat;
 	width:109px;
-	height:109px;
+	height:125px;
 	padding-top:20px;
 	padding-left:11px;
 	padding-right:11px;
@@ -405,28 +405,38 @@ img.portrait {
 .self {
 	width:250px;
 	float:left;
-	padding-top:11px;
+	/*padding-top:11px;*/
 	margin-left:38px;
-	margin-bottom:15px;
+	/*margin-bottom:15px;*/
 }
 
 .self ul {
-	padding-top: 10px;
+	padding-top: 5px;
 }
 
 .self ul li.ad {
 	background-image:url(../images/icn-ad.gif);
 }
 .self ul li.ad2 {
-	background-image:url(../images/icn-ad.gif);
+	background-image:url(../images/home.png);
 }
+.self ul li.postal {
+	background-image:url(../images/postalCode.png);
+}
+
 
 .self ul li.mail {
 	background-image:url(../images/icn-mail.gif);
 }
 
+.self ul li.state {
+	background-image:url(../images/state.png);
+}
 .self ul li.tel {
-	background-image:url(../images/icn-tel.gif);
+	background-image:url(../images/tel.png);
+}
+.self ul li.country {
+	background-image:url(../images/symbol.png);
 }
 .self ul li.phone {
 	background-image:url(../images/icn-tel.gif);

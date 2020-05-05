@@ -11,7 +11,11 @@
 <!--[if IE 6]>
   <link href="css/ie6.css" rel="stylesheet" type="text/css"/>
   <![endif]-->
-<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>
+  <!--<script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>-->
+  <!--<script src="https://code.jquery.com/jquery-1.12.4.min.js" ></script>-->
+  <!--<script type="text/javascript" src="js/jquery-1.4.2.min.js"></script>-->
+  <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  <script type="text/javascript" src="js/jquery-1.12.4.min.js"></script>
 <script type="text/javascript" src="js/jquery.tipsy.js"></script>
 <script type="text/javascript" src="js/cufon.yui.js"></script>
 <script type="text/javascript" src="js/scrollTo.js"></script>
@@ -19,17 +23,20 @@
 <script type="text/javascript" src="js/jquery.colorbox.js"></script>
 <script type="text/javascript" src="js/custom.js"></script>
 
+  <!--<script  type="text/javascript" src="../../js/lib/jquery-1.12.3.min.js"></script>-->
+  <script  type="text/javascript" src="../../js/lib/downloadResumeAsPDF.js"></script>
+<!---->
 <script type="text/javascript">
 		Cufon.replace('h1,h2');
 </script>
 </head>
 <body>
 <!-- Begin Wrapper -->
-<div id="wrapper">
+<div id="wrapper" >
   <div class="wrapper-top"></div>
-  <div class="wrapper-mid">
+  <div class="wrapper-mid form">
     <!-- Begin Paper -->
-    <div id="paper">
+    <div id="paper" >
       <div class="paper-top"></div>
       <div id="paper-mid">
         <div class="entry">
@@ -44,20 +51,24 @@
               <li class="ad" id="address"></li>
               <li class="ad2" id="address2"></li>
               <li class="mail" id="email"></li>
-              <li class="tel" id="mobileNo"></li>
-              <li class="phone" id="phoneNo"></li>
+              <li class="country" id="country"></li>
+              <li class="state" id="state"></li>
+              <li class="phone" id="mobileNo"></li>
+              <li class="tel" id="phoneNo"></li>
               <li class="web" id="webSite"></li>
+              <li class="postal" id="postCode"></li>
             </ul>
           </div>
           <!-- End Personal Information -->
           <!-- Begin Social -->
+          <!--<div id="editor"></div>-->
           <div class="social">
             <ul>
-              <li><a class='north' href="#" title="Download .pdf"><img src="images/icn-save.jpg" alt="Download the pdf version" /></a></li>
+              <li><a class='north' href="#" id="create_pdf" title="Download .pdf"><img src="images/icn-save.jpg" alt="Download the pdf version" /></a></li>
               <li><a class='north' href="javascript:window.print()" title="Print"><img src="images/icn-print.jpg" alt="" /></a></li>
               <li><a class='north' id="contact" href="contact/index.html" title="Contact Me"><img src="images/icn-contact.jpg" alt="" /></a></li>
-              <li><a class='north' href="#" title="Follow me on Twitter"><img src="images/icn-twitter.jpg" alt="" /></a></li>
-              <li><a class='north' href="#" title="My Facebook Profile"><img src="images/icn-facebook.jpg" alt="" /></a></li>
+              <li><a class='north' href="https://www.linkedin.com/in/abdul-rehman-1602" target="_blank" title="Follow me on Twitter"><img src="images/icn-twitter.jpg" alt="" /></a></li>
+              <li><a class='north' href="https://www.facebook.com/AbdulRehmanHanf" target="_blank" title="My Facebook Profile"><img src="images/icn-facebook.jpg" alt="" /></a></li>
             </ul>
           </div>
           <!-- End Social -->
@@ -162,5 +173,111 @@
 <div id="message"><a href="#top" id="top-link">Go to Top</a></div>
 <!-- End Wrapper -->
 </body>
+
+
+<script type="text/javascript" src="js/jsPdfFileDownloder.min.js"></script>
 <script  type="text/javascript" src="../../js/setValuesInResume.js"></script>
+<script>
+  (function () {
+    var
+            form = $('.form'),
+            cache_width = form.width(),
+            a4 = [595.28, 841.89]; // for a4 size paper width and height
+
+    $('#create_pdf').on('click', function () {
+      $('body').scrollTop(0);
+      createPDF();
+    });
+    //create pdf
+    function createPDF() {
+      getCanvas().then(function (canvas) {
+        var
+                img = canvas.toDataURL("image/png"),
+                doc = new jsPDF({
+                  unit: 'px',
+                  format: 'a4'
+                });
+        doc.addImage(img, 'JPEG', 20, 20);
+        doc.save('myResume-pdf.pdf');
+        form.width(cache_width);
+      });
+    }
+
+    // create canvas object
+    function getCanvas() {
+      form.width((a4[0] * 1.33333) - 80).css('max-width', 'none');
+      return html2canvas(form, {
+        imageTimeout: 2000,
+        removeContainer: true
+      });
+    }
+
+  }());
+</script>
+<script>
+  /*
+   * jQuery helper plugin for examples and tests
+   */
+  (function ($) {
+    $.fn.html2canvas = function (options) {
+      var date = new Date(),
+              $message = null,
+              timeoutTimer = false,
+              timer = date.getTime();
+      html2canvas.logging = options && options.logging;
+      html2canvas.Preload(this[0], $.extend({
+        complete: function (images) {
+          var queue = html2canvas.Parse(this[0], images, options),
+                  $canvas = $(html2canvas.Renderer(queue, options)),
+                  finishTime = new Date();
+
+          $canvas.css({ position: 'absolute', left: 0, top: 0 }).appendTo(document.body);
+          $canvas.siblings().toggle();
+
+          $(window).click(function () {
+            if (!$canvas.is(':visible')) {
+              $canvas.toggle().siblings().toggle();
+              throwMessage("Canvas Render visible");
+            } else {
+              $canvas.siblings().toggle();
+              $canvas.toggle();
+              throwMessage("Canvas Render hidden");
+            }
+          });
+          throwMessage('Screenshot created in ' + ((finishTime.getTime() - timer) / 1000) + " seconds<br />", 4000);
+        }
+      }, options));
+
+      function throwMessage(msg, duration) {
+        window.clearTimeout(timeoutTimer);
+        timeoutTimer = window.setTimeout(function () {
+          $message.fadeOut(function () {
+            $message.remove();
+          });
+        }, duration || 2000);
+        if ($message)
+          $message.remove();
+        $message = $('<div ></div>').html(msg).css({
+          margin: 0,
+          padding: 10,
+          background: "#000",
+          opacity: 0.7,
+          position: "fixed",
+          top: 10,
+          right: 10,
+          fontFamily: 'Tahoma',
+          color: '#fff',
+          fontSize: 12,
+          borderRadius: 12,
+          width: 'auto',
+          height: 'auto',
+          textAlign: 'center',
+          textDecoration: 'none'
+        }).hide().fadeIn().appendTo('body');
+      }
+    };
+  })(jQuery);
+
+</script>
+
 </html>
